@@ -1,0 +1,17 @@
+{
+  "name": "rejuvenators-platform",
+  "version": "2.2.1",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "dev": "cd admin && npm run dev",
+    "build": "node merge-builds.js"
+  },
+  "dependencies": {
+    "fs-extra": "^11.2.0",
+    "@supabase/supabase-js": "^2.45.4",
+    "stripe": "^16.5.0",
+    "bcryptjs": "^2.4.3",
+    "jsonwebtoken": "^9.0.2"
+  }
+}

@@ -1,0 +1,6 @@
+import jwt from 'jsonwebtoken';
+import bcrypt from 'bcryptjs';
+import { createClient } from '@supabase/supabase-js';
+export function getSupabaseServiceClient(){ const url = process.env.SUPABASE_URL || process.env.VITE_SUPABASE_URL; const key = process.env.SUPABASE_SERVICE_ROLE_KEY; const missing=[]; if(!url) missing.push('SUPABASE_URL (or VITE_SUPABASE_URL)'); if(!key) missing.push('SUPABASE_SERVICE_ROLE_KEY'); if(missing.length){ throw new Error('Missing Supabase envs: ' + missing.join(', ')); } return createClient(url, key); }
+export function requireRole(event, roles=['super_admin']){ const auth = event.headers.authorization || event.headers.Authorization; if(!auth) return { ok:false, statusCode:401, body:'Missing Authorization header' }; const token = auth.replace(/^Bearer\s+/i,''); try{ const payload = jwt.verify(token, process.env.JWT_SECRET || 'dev_secret'); if(!roles.includes(payload.role)) return { ok:false, statusCode:403, body:'Forbidden' }; return { ok:true, user: payload }; }catch(e){ return { ok:false, statusCode:401, body:'Invalid token' }; } }
+export function signToken(user){ return jwt.sign({ id:user.id,email:user.email,role:user.role,name:user.first_name+' '+user.last_name }, process.env.JWT_SECRET||'dev_secret', { expiresIn:'7d' }); }

@@ -1,0 +1,1 @@
+import React from 'react'; import { Card, Typography } from 'antd'; export default function Calendar(){return(<div style={{padding:24}}><Card><Typography.Title level={3} style={{marginTop:0}}>Calendar</Typography.Title><p>Calendar page</p></Card></div>)};

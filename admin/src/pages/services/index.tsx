@@ -1,0 +1,1 @@
+import React from 'react'; import { Card, Typography } from 'antd'; export default function Services(){return(<div style={{padding:24}}><Card><Typography.Title level={3} style={{marginTop:0}}>Services</Typography.Title><p>Services page</p></Card></div>)};
