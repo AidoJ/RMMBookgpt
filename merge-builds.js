@@ -25,6 +25,15 @@ async function run(cmd, cwd) {
     console.log('📦 Copying booking...');
     await fs.copy(path.join(__dirname, 'booking'), path.join(__dirname, 'dist', 'booking'));
 
+    console.log('🧭 Creating root index redirect -> /admin ...');
+    const rootIndex = `<!doctype html>
+<html><head><meta charset="utf-8" />
+<meta http-equiv="refresh" content="0; url=/admin/" />
+<script>location.replace('/admin/');</script>
+<title>Redirecting…</title></head>
+<body>Redirecting to <a href="/admin/">/admin/</a></body></html>`;
+    await fs.writeFile(path.join(__dirname, 'dist', 'index.html'), rootIndex);
+
     console.log('⚙️ Aggregating functions...');
     await fs.remove(path.join(__dirname, 'netlify', 'functions'));
     await fs.ensureDir(path.join(__dirname, 'netlify', 'functions'));
